@@ -1,90 +1,13 @@
-//基础头文件
-#include <iostream>
-#include <cstdio>
-#include <cstdlib>
-//字符串
-#include <cstring>
-#include <string>
-//时间
-#include <ctime>
-//用于设置控制台字体颜色
-#include "windows.h"
-//字符串流：用于编辑字符串
-#include <sstream>
-//文件流：用于读取配置文件
-#include <fstream>
-//用于判断文件可用性
-#include <shlobj.h>
-#include <CommDlg.h>
-#include <io.h>
-//定义统一颜色
-#define COLOR_SUCCESS 10
-#define COLOR_PROCESS 14
-#define COLOR_ERROR 12
-#define COLOR_TIPS 9
-#define COLOR_DEFAULT 7
+#include "ServerMain.h"
 using namespace std;
 
 int RestartCount;
 tm* NowTime;
 tm* LastRestartTime;
-struct LocalConfig {
-    string Command;
-    int RestartTimeout;
-};
 LocalConfig MainConfig;
 
-inline void GetNowTime() {
-    time_t now = time(NULL);
-    NowTime = localtime(&now);
-}
-string GetTimeString(tm* tm_t) {
-    stringstream ret;
-    ret << tm_t->tm_hour << ":" << tm_t->tm_min;
-    return ret.str();
-}
-string GetDateString(tm* tm_t) {
-    stringstream ret;
-    ret << tm_t->tm_mon + 1 << "-" << tm_t->tm_mday;
-    return ret.str();
-}
-void setTitle(string title) {
-    stringstream cmd;
-    cmd << "title  "<< title << "";
-    system(cmd.str().c_str());
-}
-void timeout(int second) {
-    stringstream cmd;
-    cmd << "timeout " << second;
-    system(cmd.str().c_str());
-}
-void color(int x) {
-    /*
-    0 = 黑色       8  = 灰色
-    1 = 蓝色       9  = 淡蓝色
-    2 = 绿色       10 = 淡绿色
-    3 = 浅绿色     11 = 淡浅绿色
-    4 = 红色       12 = 淡红色
-    5 = 紫色       13 = 淡紫色
-    6 = 黄色       14 = 淡黄色
-    7 = 白色       15 = 亮白色
-    */
-    if (x >= 0 && x <= 15)
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), x);
-    else
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
-}
-inline bool fileExits(const char* name) {
-    int acsResult = _access(name, 00);
-    if (acsResult == 0) return true;
-    else return false;
-}
-inline bool fileRead(const char* name) {
-    int acsResult = _access(name, 04);
-    if (acsResult == 0) return true;
-    else return false;
-}
 void ReadConfig() {
+    // 读取配置文件 V1
     MainConfig.Command = "";
     MainConfig.RestartTimeout = 5;
     color(COLOR_PROCESS);
@@ -144,32 +67,33 @@ void ReadConfig() {
     in.close();
     color(COLOR_SUCCESS);
     puts("[SUCC] 配置文件读取成功：");
-    cout << "\tJavaCommand: " << MainConfig.Command << endl;
+    cout << "\tCommand: " << MainConfig.Command << endl;
     cout << "\tRestartTimeout: " << MainConfig.RestartTimeout << endl;
     puts("");
 }
 
 int main() {
+    system("chcp 65001"); // 使用 UTF-8 格式化控制台
     system("echo off");
     system("cls");
-    setTitle("PowerCode 进程守护器 V1.2");
+    setTitle("SM服务器启动器 V1.3");
     color(COLOR_SUCCESS);
     puts("[SUCC] 软件启动成功！");
     puts("");
     color(COLOR_TIPS);
-    puts("========== PowerCode 进程守护器 ==========");
-    puts("版本：V1.2");
-    puts("构建日期：2022-12-01");
+    puts("========== SM服务器启动器 ==========");
+    puts("版本：V1.3");
+    puts("构建日期：2022-12-13");
     puts("作者：CodeZhangBorui");
     puts("");
     puts("");
     while(1) {
         ReadConfig();
-        GetNowTime();
+        NowTime = GetNowTime();
         LastRestartTime = NowTime;
         stringstream title;
         title
-                << "PowerCode 进程守护器 V1.2 [ 进程退出次数："
+                << "SM服务器启动器 V1.3 [ 进程退出次数："
                 << RestartCount
                 << " 上次重启："
                 << GetDateString(LastRestartTime)
