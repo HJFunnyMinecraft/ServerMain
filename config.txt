@@ -3,25 +3,4 @@ command= java -Xmx2g -Xms1g -jar paper-1.17.1.jar
 timeout= 5
 #Config_End.
 
-此文件为 PowerCode 进程守护器 的配置文件
-
-“Config_Start.”之前、“Config_End.”之后的内容将被忽略。
-
-参数名解释：
-	[command=] 命令行启动参数，默认为空。
-	[timeout=] 服务器崩溃后等待几秒重启，设为 -1 为不自动重启，默认为 5。
-
-语法解释：
-	1. 每一行的格式为 “[参数名]= [参数值]”，注意等号前无空格，等号后有空格。
-	2. 整个配置文件内容可以写为多行也可以写为单行，但请注意单行下请添加空格，例：
-		==== 多行写法 ====
-		   1 | name1= value1
-		   2 | name2= value2
-		==== 单行写法 ====
-		   1 | name1= value1 name2= value2
-	3. 配置文件必须包含至少一个 “Config_Start.” 和 “Config_End“（我们称之为配置组），
-              且 “Config_Start.” 必须在 “Config_End.” 之前。
-	4. 如果填入了多个配置组，只会载入第一个。
-	5. 如果找不到某个参数，将以默认值替代。
-
-此配置文件会在进程每次重启时重载。
+更多内容请访问；https://github.com/HJFunnyMinecraft/ServerMain/README.md
