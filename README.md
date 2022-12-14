@@ -4,7 +4,9 @@ SM 服务器启动器，用于 Minecraft Java Edition 以及其他命令行下�
 
 ## 如何使用
 
-将二进制文件 `ServerMain.exe` 与配置文件 `config.txt` 放入同一目录下，执行程序 `ServerMain.exe` 即可。
+执行程序 `ServerMain.exe` 即可。
+
+若想对程序进行设置，请打开配置文件 `config.json`。
 
 ## 关于配置文件
 
