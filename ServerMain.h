@@ -17,6 +17,9 @@
 #include <shlobj.h>
 #include <CommDlg.h>
 #include <io.h>
+// JSONCPP 库，用于读取 JSON 配置
+#include "lib/jsoncpp/json/json.h"
+#include "lib/jsoncpp/jsoncpp.cpp"
 // 定义统一颜色
 #define COLOR_SUCCESS 10
 #define COLOR_PROCESS 14
@@ -73,25 +76,30 @@ void color(int x) {
 void timeout(int second) {
     // 控制台等待
     // 原通过控制台执行 timeout：已废弃
-    for(int i = 0; i < second; i++) {
-        printf("\r");
-        int pb = (int)(20.0 * (i * 1.0 / second));
-        color(1);
-        for(int j = 1; j <= pb; j++) {
-            printf("━");
+    if(second > 0) {
+        for(int i = 0; i < second; i++) {
+            printf("\r");
+            int pb = (int)(20.0 * (i * 1.0 / second));
+            color(1);
+            for(int j = 1; j <= pb; j++) {
+                printf("━");
+            }
+            color(8);
+            for(int j = 1; j <= 20 - pb; j++) {
+                printf("━");
+            }
+            color(7);
+            printf(" 等待 %d 秒 ……   ", second - i);
+            _sleep(1000);
         }
-        color(8);
-        for(int j = 1; j <= 20 - pb; j++) {
-            printf("━");
-        }
+        color(10);
+        printf("\r━━━━━━━━━━━━━━━━━━━━");
         color(7);
-        printf(" 等待 %d 秒 ……   ", second - i);
-        _sleep(1000);
+        printf(" 已等待 %d 秒     \n", second);
+    } else if(timeout < 0) {
+        puts("请按任意键继续……");
+        system("pause > nul");
     }
-    color(10);
-    printf("\r━━━━━━━━━━━━━━━━━━━━");
-    color(7);
-    printf(" 已等待 %d 秒     \n", second);
 }
 inline bool fileExits(const char* name) {
     // 文件是否存在

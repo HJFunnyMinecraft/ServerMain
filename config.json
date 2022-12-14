@@ -1,0 +1,8 @@
+{
+    "readme": [
+        "在 readme 内的内容将被忽略。若要了解更多信息，请访问 https://github.com/HJFunnyMinecraft/ServerMain/README.md",
+        "Contents inside readme will be ignore.To learn more, please visit https://github.com/HJFunnyMinecraft/ServerMain/README.md"
+    ],
+    "command": "",
+    "timeout": 5
+}
